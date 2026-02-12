@@ -21,7 +21,7 @@ trait HasMessage
    * @param string $type
    * @return QueryBuilder
    */
-  function messages(IConversation|int $conversation = null, $otherUser = null, array $reply = [], $type = 'private')
+  function messages(IConversation|int|null $conversation = null, $otherUser = null, array $reply = [], $type = 'private')
   {
     if ($type == 'private') {
       if ($conversation || $otherUser) {
@@ -88,7 +88,7 @@ trait HasMessage
    * @param array $type
    * @return BelongsToMany
    */
-  function conversations(IConversation|int $conversation = null, $otherUser = null, array $type = [])
+  function conversations(IConversation|int|null $conversation = null, $otherUser = null, array $type = [])
   {
     return $this->belongsToMany(
       Config::config('models.conversation'),

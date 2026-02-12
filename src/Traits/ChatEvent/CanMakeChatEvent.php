@@ -21,7 +21,7 @@ trait CanMakeChatEvent
    * @param int|null $made_type
    * @return MorphMany
    */
-  function chatEventMakers(Model $model = null, int $id = null, string $type = null, int $made_id = null, string $made_type = null)
+  function chatEventMakers(?Model $model = null, ?int $id = null, ?string $type = null, ?int $made_id = null, ?string $made_type = null)
   {
     return $this->morphMany(Config::config('models.chat_event'), 'maker')->latest()
       ->when($type, fn($q) => $q->whereType($type))

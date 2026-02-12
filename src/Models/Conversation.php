@@ -130,7 +130,7 @@ class Conversation extends Model implements IConversation
    * @param Binkode\ChatSystem\Contarcts\IChatEventMaker $user
    * @return QueryBuilder
    */
-  function scopeWhereHasLastMessage($q, IChatEventMaker $user = null)
+  function scopeWhereHasLastMessage($q, ?IChatEventMaker $user = null)
   {
     $q->whereHas(
       'last_message',
@@ -148,7 +148,7 @@ class Conversation extends Model implements IConversation
    * @param bool $all
    * @return Binkode\ChatSystem\Models\ChatEvent
    */
-  function makeDelete(IChatEventMaker $user = null, $row = false, $all = false)
+  function makeDelete(?IChatEventMaker $user = null, $row = false, $all = false)
   {
     return $this->makeChatEvent($user, 'delete', $row, $all);
   }
@@ -161,7 +161,7 @@ class Conversation extends Model implements IConversation
    * @param bool $all
    * @return Binkode\ChatSystem\Models\ChatEvent
    */
-  function makeRead(IChatEventMaker $user = null, $row = true, $all = false)
+  function makeRead(?IChatEventMaker $user = null, $row = true, $all = false)
   {
     return $this->makeChatEvent($user, 'read', $row, $all);
   }
@@ -174,7 +174,7 @@ class Conversation extends Model implements IConversation
    * @param bool $all
    * @return Binkode\ChatSystem\Models\ChatEvent
    */
-  function makeDeliver(IChatEventMaker $user = null, $row = true, $all = false)
+  function makeDeliver(?IChatEventMaker $user = null, $row = true, $all = false)
   {
     return $this->makeChatEvent($user, 'deliver', $row, $all);
   }
@@ -242,7 +242,7 @@ class Conversation extends Model implements IConversation
    * @param Binkode\ChatSystem\Contarcts\IChatEventMaker|int $user
    * @return HasOne
    */
-  public function participant(IChatEventMaker|int $user = null): HasOne
+  public function participant(IChatEventMaker|int|null $user = null): HasOne
   {
     return $this->hasOne(Config::config('models.conversation_user'))->latest()
       ->when($user, fn($q) => $q->whereUserId($user->id ?? $user));
@@ -288,7 +288,7 @@ class Conversation extends Model implements IConversation
    * @param Binkode\ChatSystem\Contarcts\IChatEventMaker $user
    * @return QueryBuilder
    */
-  public function unread(int|IChatEventMaker $user = null)
+  public function unread(int|IChatEventMaker|null $user = null)
   {
     $user_id = $user->id ?? $user ?? auth()->user()?->id;
 
@@ -302,7 +302,7 @@ class Conversation extends Model implements IConversation
    * @param Binkode\ChatSystem\Contarcts\IChatEventMaker $user
    * @return QueryBuilder
    */
-  function undelivered(int|IChatEventMaker $user = null)
+  function undelivered(int|IChatEventMaker|null $user = null)
   {
     $user_id = $user->id ?? $user ?? auth()->user()?->id;
 

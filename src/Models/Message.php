@@ -177,7 +177,7 @@ class Message extends Model implements IMessage
    * @param Binkode\ChatSystem\Contarcts\IChatEventMaker|null $by
    * @return QueryBuilder
    */
-  function scopeWhereConversationWasntDeleted($q, IChatEventMaker $by = null)
+  function scopeWhereConversationWasntDeleted($q, ?IChatEventMaker $by = null)
   {
     $q->whereDoesntHave(
       'conversation',
@@ -362,7 +362,7 @@ class MessageCollection extends Collection
    * @param bool $all
    * @return ChatEvent
    */
-  function makeDelete(IChatEventMaker $user = null, $all = false)
+  function makeDelete(?IChatEventMaker $user = null, $all = false)
   {
     return $this->makeChatEvent($user, 'delete', $all);
   }

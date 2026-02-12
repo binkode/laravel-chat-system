@@ -52,7 +52,7 @@ trait HasChatEvent
    * @param ChatEventMaker|null $maker
    * @return MorphOne
    */
-  function delivered(ChatEventMaker $maker = null)
+  function delivered($maker = null)
   {
     return $this->morphOne(Config::config('models.chat_event'), 'made')
       ->whereType('deliver')->latest()
