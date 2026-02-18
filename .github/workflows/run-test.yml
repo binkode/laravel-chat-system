@@ -18,10 +18,13 @@ jobs:
         include:
           - laravel: 10.*
             testbench: 8.*
+            pest: ^2.8
           - laravel: 11.*
             testbench: 9.*
+            pest: ^2.8
           - laravel: 12.*
             testbench: 10.*
+            pest: ^3.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
@@ -44,7 +47,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "symfony/console:>=4.3.4" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update -W
+          composer require --dev "orchestra/testbench:${{ matrix.testbench }}" "pestphp/pest:${{ matrix.pest }}" --no-interaction --no-update -W
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction -W
       - name: Execute tests
         run: composer test
